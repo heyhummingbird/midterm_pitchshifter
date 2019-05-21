@@ -21,9 +21,10 @@ var serverSocket = require('socket.io').listen(server);
 app.use(cors());
 
 // this is our MongoDB database
-const dbRoute = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWD}@${process.env.DB_HOST}/test`;
+//const dbRoute = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWD}@${process.env.DB_HOST}/test`;
 
 // connects our back end code with the database
+/*
 mongoose.connect(
   dbRoute,
   { useNewUrlParser: true }
@@ -77,7 +78,7 @@ db.once("open", () => {
                   socket.emit('init', res)
               })
         })
-/*
+
         socket.on('clear', () => {
             // Remove all chats from collection
             Message.deleteMany({}, () => {
@@ -85,14 +86,14 @@ db.once("open", () => {
                 socket.broadcast.emit('cleared')
             })
         })
-*/
+
 
     })
 });
 
 // checks if connection with the database is successful
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
-
+*/
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));

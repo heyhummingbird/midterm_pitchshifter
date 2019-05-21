@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
+import { NavLink, Route, Redirect, BrowserRouter } from "react-router-dom";
 //import io from 'socket.io-client';
 
 import EventEmitter from 'events';
@@ -72,8 +72,6 @@ class App extends React.Component {
     play() {
         console.log(this.state.action);
         if (this.state.action !== 'play') {
-            //this.audioPlayer.setBuffer(buffer).then(this.audioPlayer.play.bind(this));
-                //this.play();
             this.audioPlayer.play();
             this.setState({action: 'play'});
         }
@@ -93,12 +91,7 @@ class App extends React.Component {
     }
 
     handleFileChange(e) {
-        //console.log("file");
         if (e.target.files.length > 0) {
-            //this.stop();
-
-            //this.setState({action: 'play'});
-
             this.emitter.emit('status', 'Reading file...');
             this.emitter.emit('state', {
                 error: undefined,
@@ -143,8 +136,6 @@ class App extends React.Component {
                 });
                 console.log(this.state.songs);
 
-
-
                 //this.audioPlayer.setBuffer(buffer, this.audioPlayer.play.bind(this.audioPlayer));
                 //this.setState((state) => {
                 //    return {selected: this.state.songs.length-1};
@@ -175,12 +166,12 @@ class App extends React.Component {
         }
         catch (err){
             this.emitter.emit('state', {
-                        error: {
-                            message: err.message,
-                            type: 'Decoding error',
-                        },
-                    });
-                    return;
+                error: {
+                    message: err.message,
+                    type: 'Decoding error',
+                },
+            });
+            return;
         }
     }
 
