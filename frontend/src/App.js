@@ -70,7 +70,6 @@ class App extends React.Component {
     }
 */
     play() {
-        console.log(this.state.action);
         if (this.state.action !== 'play') {
             this.audioPlayer.play();
             this.setState({action: 'play'});
@@ -146,32 +145,21 @@ class App extends React.Component {
     }
 
     selectSong(e) {
-        try {
-            e.persist();
-            console.log(this.state.selected);
-            console.log(e.target.id);
-            if (this.state.selected != e.target.id) {
-                console.log("change song");
-                let buffer = this.state.songs[e.target.id].audiobuffer;
-                this.stop();
-                this.setState((state) => {
-                    return {action: 'play',
-                            selected: e.target.id}
-                    }
-                );
-                this.audioPlayer.setBuffer(buffer, 
-                    this.audioPlayer.play.bind(this.audioPlayer)
-                )
-            }
-        }
-        catch (err){
-            this.emitter.emit('state', {
-                error: {
-                    message: err.message,
-                    type: 'Decoding error',
-                },
-            });
-            return;
+        e.persist();
+        console.log(this.state.selected);
+        console.log(e.target.id);
+        if (this.state.selected != e.target.id) {
+            console.log("change song");
+            let buffer = this.state.songs[e.target.id].audiobuffer;
+            this.stop();
+            this.setState((state) => {
+                return {action: 'play',
+                        selected: e.target.id}
+                }
+            );
+            this.audioPlayer.setBuffer(buffer, 
+                this.audioPlayer.play.bind(this.audioPlayer)
+            )
         }
     }
 
@@ -190,7 +178,6 @@ class App extends React.Component {
     handleSeek(e) {
         const percent = parseFloat(e.target.value);
         this.audioPlayer.seekPercent(percent);
-        this.play();
     }
 
     percentDone() {
