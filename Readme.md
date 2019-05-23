@@ -28,19 +28,22 @@ backend server 會至以下路徑連接 MongoDB：
 ```mongodb+srv://${DB_USER}:${DB_PASSWD}@${DB_HOST}/${DB_NAME}```
 
 3. 接著在 `midterm_pitchshifter/` 中打以下指令
-```$ npm install```
-```$ npm start```
+```
+$ npm install
+$ npm start
+```
 
 4. go to `localhost:3000` to view the website
 
 
 # 注意事項
 目前僅保證支援 Google Chrome
+已知 Safari 上傳音檔會出錯
 
 
 # Reference
 前端 React.js
-後端 Express.js / Mongodb
+後端 Express.js / MongoDB
 
 音高與速度控制部分主要來自這個 single-page 的 repo:
 `https://github.com/dumbmatter/screw`
@@ -48,8 +51,10 @@ backend server 會至以下路徑連接 MongoDB：
 它有使用 SoundTouch JS audio processing library 這個開源的 library
 
 # 我的貢獻
-1. debugggg QQ
+1. 邏輯部份 debugggg QQ
 2. 支援多個音檔切換
+3. 重寫前端
+4. 連接後端
 
 # 心得
 練團時有感於如果定key跟原曲不一樣的話，要對照原曲或跟著原曲練習都比較麻煩，因此想要做一個具有改變音樂音高跟速度功能的網頁。
@@ -63,6 +68,7 @@ backend server 會至以下路徑連接 MongoDB：
 - [ ] 做成播放 bar
 - [ ] pitch 改成以半音為單位
 - [ ] 解決 css scrolling 問題
+- [ ] Slider 範圍位置
 
 ## Bug
 - [ ] 解決有時放不出歌的問題
