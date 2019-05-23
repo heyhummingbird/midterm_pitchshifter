@@ -8,7 +8,7 @@ const SongSchema = new Schema({
 		required: [true, 'Name field is required.']
 	},
 	content: {
-		type: Buffer,
+		type: String,
 		required: [true, 'Content field is required.']
 	}
 })
