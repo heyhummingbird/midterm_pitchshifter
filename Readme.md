@@ -57,15 +57,22 @@ backend server 會至以下路徑連接 MongoDB：
 加功能或 refactor 的空間還很大，之後應該也會去解決切換音樂時當下微 lag 的問題。
 
 # TODO
+## Feature / UI
 - [x] 接上 MongoDB
-- [ ] 解決有時放不出歌的問題
-- [ ] 解決 Safari 問題 / wav 問題
-- [ ] Show "Loading..." upon loading
-- [ ] 調整架構（refactor）
-- [ ] pitch 改成以半音為單位
-- [ ] 解決上一首歌 buffer 的問題
-- [ ] 解決 css scrolling 問題
 - [ ] Waveform UI
 - [ ] 做成播放 bar
+- [ ] pitch 改成以半音為單位
+- [ ] 解決 css scrolling 問題
+
+## Bug
+- [ ] 解決有時放不出歌的問題
+- [ ] 解決上一首歌 buffer 的問題
+
+## Compatibility
+- [ ] 解決 Safari 問題 / wav 問題
+
+## Other
+- [x] Load song name first
+- [ ] 調整架構（refactor）
 - [ ] test with file larger than 16MB
 
