@@ -39,8 +39,6 @@ db.once("open", () => {
         }
 
         socket.on('upload', data => {
-            console.log(data.content);
-
             // Insert message
             const song = new Song({ 
                 name: data.name, 
@@ -59,14 +57,22 @@ db.once("open", () => {
             })
         })
 
-        socket.on('loadAll', () => {
-            Song.find()
-              .sort({ _id: 1 })
-              .exec((err, res) => {
-                  if (err) throw err
+        socket.on('loadAll', async () => {
+            await Song.find({}, { name: 1 })
+                .sort({ _id: -1 })
+                .exec((err, res) => {
+                    if (err) throw err;
+                    socket.emit('loadAllNames', res);
+                }
+            );
 
-                  socket.emit('loadAll', res)
-              })
+            Song.find()
+              .sort({ _id: -1 })
+              .exec((err, res) => {
+                  if (err) throw err;
+                  socket.emit('loadAll', res);
+              }
+            )
         })
 
         socket.on('clear', () => {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const TrackControls = props => {
     //console.log(props.error);
+    //console.log(props.filename);
     const disabled = (props.error !== undefined && props.error.type !== '') || props.filename === undefined;
 
     let playOrPause;

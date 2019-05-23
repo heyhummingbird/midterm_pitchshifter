@@ -30,7 +30,6 @@ class App extends React.Component {
             filename: undefined,
             pitch: 1,
             simpleFilter: undefined,
-            status: [],
             t: 0,
             tempo: 1,
             songs: [],
@@ -39,13 +38,6 @@ class App extends React.Component {
 
         this.emitter = new EventEmitter();
         this.emitter.on('state', state => this.setState(state));
-        this.emitter.on('status', status => {
-            if (status === 'Done!') {
-                this.setState({status: []});
-            } else {
-                this.setState({status: this.state.status.concat(status)});
-            }
-        });
         this.emitter.on('stop', () => this.stop());
 
         this.audioPlayer = new AudioPlayer({
@@ -54,6 +46,7 @@ class App extends React.Component {
             tempo: this.state.tempo,
         });
 
+        this.init = false;
     }
 
     data2ab = async (data) => {
@@ -68,19 +61,24 @@ class App extends React.Component {
         this.getDataFromDb(this.socket);
     }
 
+    fillSongList = (data) => {
+        console.log(data);
+        if (data.length) {
+            this.setState((state) => {
+                let songs = state.songs.slice(0, state.songs.length - data.length);
+                for (var i = 0; i < data.length; i++) {
+                    //console.log(data[i].content);
+                    songs.push(new Song(i, data[i].name, data[i].content));
+                }
+                return {songs: songs};
+            });
+        }
+    }
+
     getDataFromDb = socket => {
         socket.emit("loadAll");
-        socket.on("loadAll", data => {
-            if (data.length) {
-                let songs = [];
-                for (var i = 0; i < data.length; i++)
-                    songs.push(new Song(i, data[i].name, data[i].content));
-                this.setState((state) => {
-                    return {songs: songs}
-                });
-            }
-            //console.log(this.state.songs);
-        });
+        socket.on("loadAllNames", this.fillSongList);
+        socket.on("loadAll", this.fillSongList);
     }
 
     play() {
@@ -105,7 +103,6 @@ class App extends React.Component {
 
     handleFileChange(e) {
         for (var i = 0; i < e.target.files.length; i++) {
-            this.emitter.emit('status', 'Reading file...');
             this.emitter.emit('state', {
                 error: undefined,
                 filename: undefined,
@@ -115,11 +112,11 @@ class App extends React.Component {
 
             const reader = new FileReader();
             reader.readAsDataURL(file);
-
             reader.onload = async event => {
-                let data = reader.result.slice(reader.result.search(";"))
+                let data = reader.result.slice(reader.result.search(";")+8)
 
                 try {
+                    // Test if the file can be decoded as audio.
                     await this.data2ab(data);
                 } catch (err) {
                     this.emitter.emit('state', {
@@ -132,7 +129,7 @@ class App extends React.Component {
                 }
 
                 let songs = this.state.songs;
-                songs.push(new Song(songs.length, filename, data));
+                songs.unshift(new Song(songs.length, filename, data));
                 this.setState((state) => {
                     return {songs: songs,
                             error: {
@@ -147,26 +144,31 @@ class App extends React.Component {
         }
     }
 
-    handelSongChange(e) {
+    handleSongChange(e) {
         e.persist();
-        if (this.state.selected != e.target.id) {
+        if (this.state.action === "stop" || this.state.selected != e.target.id) {
             console.log("change song");
             this.stop();
-            this.setState((state) => {
-                return {action: 'play',
-                        selected: e.target.id}
-                }
-            );
 
-            var a = new Promise((res, rej) => {
+            var retriveAudioBuffer = new Promise((res, rej) => {
                 res(this.data2ab(this.state.songs[e.target.id].data));
             })
 
-            a.then((buffer) => {
+            retriveAudioBuffer.then((buffer) => {
                 this.audioPlayer.setBuffer(
                     buffer, 
                     this.audioPlayer.play.bind(this.audioPlayer)
                 )
+                this.setState((state) => {
+                    return {
+                        action: 'play',
+                        selected: e.target.id,
+                        filename: this.state.songs[e.target.id].name
+                    }
+                });
+                console.log("finish");
+            }, (err) => { 
+                console.log(err.message) 
             });
         }
     }
@@ -217,7 +219,13 @@ class App extends React.Component {
                                 <h3> Tracklist </h3>
                                 {
                                     this.state.songs.map((song, idx) => 
-                                        <button className="brk-btn" key={idx} id={idx} onClick={(event) => this.handelSongChange(event)}>{ song.name }</button>
+                                        <button 
+                                            className="brk-btn btn" 
+                                            key={idx} 
+                                            id={idx} 
+                                            disabled={ song.data === undefined }
+                                            onClick={(event) => this.handleSongChange(event)}>{ song.name }
+                                        </button>
                                     )
                                 }
                             </div>

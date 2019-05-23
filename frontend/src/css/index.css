@@ -316,6 +316,7 @@ button.track:hover, button.track:focus, button.track:active {
   border: 0.2em solid #08546F;
   padding: 0.5em 1em;
   margin: 0.5em;
+  white-space: normal;
 }
 
 .brk-btn::before {
@@ -353,4 +354,5 @@ button.track:hover, button.track:focus, button.track:active {
 .brk-btn:hover::after {
   left: 80%;
 }
+
 

@@ -59,7 +59,7 @@ backend server 會至以下路徑連接 MongoDB：
 # TODO
 - [x] 接上 MongoDB
 - [ ] 解決有時放不出歌的問題
-- [ ] 解決 Safari 問題
+- [ ] 解決 Safari 問題 / wav 問題
 - [ ] Show "Loading..." upon loading
 - [ ] 調整架構（refactor）
 - [ ] pitch 改成以半音為單位
@@ -67,4 +67,5 @@ backend server 會至以下路徑連接 MongoDB：
 - [ ] 解決 css scrolling 問題
 - [ ] Waveform UI
 - [ ] 做成播放 bar
+- [ ] test with file larger than 16MB
 
