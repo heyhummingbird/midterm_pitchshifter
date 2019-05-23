@@ -79,7 +79,7 @@ class App extends React.Component {
                     return {songs: songs}
                 });
             }
-            console.log(this.state.songs);
+            //console.log(this.state.songs);
         });
     }
 

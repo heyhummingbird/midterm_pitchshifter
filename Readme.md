@@ -17,12 +17,15 @@
 
 1. git clone ${repo_path}
 
-2. 需在 `midterm_pitchshifter/backend/.env` 中指定 mongodb 的路徑，格式如下：
+2. 需建立一個檔案 `midterm_pitchshifter/backend/.env`，並在裡面指定 MongoDB 的路徑，格式如下：
 ```
 DB_HOST={DB_HOST}                                                 
 DB_USER={DB_USER}
 DB_PASSWD={DB_PASSWD}
+DB_NAME={DB_NAME}
 ```
+backend server 會至以下路徑連接 MongoDB：
+```mongodb+srv://${DB_USER}:${DB_PASSWD}@${DB_HOST}/${DB_NAME}```
 
 3. 接著在 `midterm_pitchshifter/` 中打以下指令
 ```$ npm install```

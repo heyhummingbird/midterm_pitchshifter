@@ -20,7 +20,7 @@ var serverSocket = require('socket.io').listen(server);
 app.use(cors());
 
 // this is our MongoDB database
-const dbRoute = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWD}@${process.env.DB_HOST}/test`;
+const dbRoute = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWD}@${process.env.DB_HOST}/${process.env.DB_NAME}`;
 
 // connects our back end code with the database
 
