@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const TrackControls = props => {
-    //console.log(props.error);
     //console.log(props.filename);
-    const disabled = (props.error !== undefined && props.error.type !== '') || props.filename === undefined;
+    const disabled = (props.filename === undefined);
 
     let playOrPause;
     if (props.action === 'play') {
@@ -46,10 +45,6 @@ const TrackControls = props => {
 
 TrackControls.propTypes = {
     action: PropTypes.string,
-    error: PropTypes.shape({
-        type: PropTypes.string.isRequired,
-        message: PropTypes.string.isRequired,
-    }),
     filename: PropTypes.string,
     onPause: PropTypes.func,
     onPlay: PropTypes.func,

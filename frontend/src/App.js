@@ -236,7 +236,6 @@ class App extends React.Component {
                                     <div className="col-xs-5 col-sm-3 col-lg-2" style={{paddingTop: '6px'}}>
                                         <TrackControls
                                             action={this.state.action}
-                                            error={this.state.error}
                                             filename={this.state.filename}
                                             onPlay={() => this.play()}
                                             onPause={() => this.pause()}
